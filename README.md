@@ -1,4 +1,4 @@
-# Zero — personal Discord bot
+# ZERO — personal Discord bot
 # ============================
 # Built with Python 3.12 + discord.py 2.x
 #
