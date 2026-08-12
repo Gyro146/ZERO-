@@ -9,8 +9,8 @@ except ImportError:
 
 
 def _env_path() -> Path:
-    """Resolve .env path relative to the project root."""
-    return Path(__file__).resolve().parents[2] / ".env"
+    """Resolve .env path relative to the project root (ZERO/)."""
+    return Path(__file__).resolve().parents[1] / ".env"
 
 
 def _load_env():

@@ -1,6 +1,6 @@
+import asyncio
 import logging
 import sys
-import traceback
 from typing import Optional
 
 import discord
@@ -170,32 +170,29 @@ async def sync_commands() -> None:
 # Entry point
 # ---------------------------------------------------------------------------
 
-def main() -> None:
+async def main_async() -> None:
     level = get_log_level()
     log = setup_logging(level)
 
     log.info("Starting ZERO bot…")
     token = get_discord_token()
 
-    # Register built-in commands before logging in
-    # (commands/__init__.py does this on import)
-    import ZERO.src.commands  # noqa: F401 — registers !ping and /ping
+    # Register all commands onto the live bot instance before login
+    from ZERO.src.commands import register_all
+    register_all(bot)
 
-    async def _run() -> None:
-        # Register all commands onto the live bot instance before login
-        from ZERO.src.commands import register_all
-        register_all(bot)
+    await bot.login(token)
+    await sync_commands()
+    await bot.connect()
 
-        await bot.login(token)
-        await sync_commands()
-        await bot.connect()
 
+def main() -> None:
     try:
-        bot.loop.run_until_complete(_run())
+        asyncio.run(main_async())
     except KeyboardInterrupt:
-        log.info("Shutting down ZERO.")
+        logging.getLogger("ZERO").info("Shutting down ZERO.")
     except Exception:
-        log.exception("Fatal error during startup. Shutting down.")
+        logging.getLogger("ZERO").exception("Fatal error during startup. Shutting down.")
         raise
 
 
