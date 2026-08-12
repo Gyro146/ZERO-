@@ -1,0 +1,13 @@
+# Discord bot token — NEVER commit this file.
+# Copy .env.example → .env and fill in your values.
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
