@@ -181,6 +181,11 @@ async def main_async() -> None:
     from ZERO.src.commands import register_all
     register_all(bot)
 
+    # Load ticket system cogs
+    await bot.load_extension("ZERO.src.cogs.ticket_config")
+    await bot.load_extension("ZERO.src.cogs.tickets")
+    log.info("Loaded ticket cogs")
+
     await bot.login(token)
     await sync_commands()
     await bot.connect()
